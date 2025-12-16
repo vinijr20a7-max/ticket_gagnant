@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Gagnant 2025 🎁</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        .page {
+            display: none;
+            width: 100%;
+            max-width: 700px;
+            padding: 20px;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 0 10px rgba(240, 147, 251, 0.5)); }
+            50% { filter: drop-shadow(0 0 20px rgba(245, 87, 108, 0.8)); }
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .btn:hover {
+            transform: scale(1.1) !important;
+        }
+
+        .ticket-container {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            border: 5px dashed #ff6b6b;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px auto;
+            max-width: 600px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .ticket-title {
+            font-size: 2rem;
+            color: #ff6b6b;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .ticket-subtitle {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .scratch-cards {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .scratch-card {
+            position: relative;
+            width: 160px;
+            height: 200px;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .scratch-card:hover:not(.scratched):not(.disabled) {
+            transform: scale(1.05);
+        }
+
+        .scratch-card.disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .scratch-card.scratched {
+            cursor: default;
+        }
+
+        .prize-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .prize-image img {
+            max-width: 120px;
+            max-height: 120px;
+            object-fit: contain;
+        }
+
+        .scratch-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+        }
+
+        .card-number {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff6b6b;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            z-index: 3;
+        }
+
+        .congratulations {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            border: 5px solid #ff6b6b;
+            border-radius: 30px;
+            padding: 50px;
+            z-index: 1000;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            animation: popIn 0.5s ease;
+            display: none;
+        }
+
+        .congratulations.show {
+            display: block;
+        }
+
+        @keyframes popIn {
+            0% { transform: translate(-50%, -50%) scale(0); }
+            70% { transform: translate(-50%, -50%) scale(1.1); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .congrats-title {
+            font-size: 3rem;
+            color: #ff6b6b;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+            animation: shake 0.5s ease infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-5deg); }
+            75% { transform: rotate(5deg); }
+        }
+
+        .congrats-text {
+            font-size: 1.5rem;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .prize-show {
+            margin: 30px 0;
+        }
+
+        .prize-show img {
+            max-width: 200px;
+            animation: float 2s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #f093fb;
+            animation: confetti-fall 3s linear;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .reveal-container {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .reveal-text {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 20px 0;
+            animation: slideIn 0.8s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .emoji-big {
+            font-size: 5rem;
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .signature {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff0000, #ff8c00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <!-- PAGE 1: Accueil -->
+    <div class="page active" id="page1">
+        <div class="container">
+            <div class="logo">🎟️ TICKET GAGNANT 2025</div>
+            <h1>GRATTE TON TICKET ET GAGNE UN CADEAU INCROYABLE 🎁</h1>
+            <p class="subtitle">Tu as 1 chance de gratter ! Choisis bien ton ticket !</p>
+            
+            <div class="badges">
+                <div class="badge">✅ 100% GRATUIT</div>
+                <div class="badge">🔒 AUCUN PAIEMENT</div>
+                <div class="badge">⏰ OFFRE LIMITÉE</div>
+            </div>
+
+            <button class="btn" onclick="goToPage(2)">JOUER MAINTENANT 🎯</button>
+            
+            <p style="margin-top: 20px; color: #999; font-size: 0.9rem;">
+                Plus de 10,000 gagnants cette semaine !
+            </p>
+        </div>
+    </div>
+
+    <!-- PAGE 2: Ticket à gratter -->
+    <div class="page" id="page2">
+        <div class="container">
+            <div class="ticket-container">
+                <div class="ticket-title">🎟️ TON TICKET GAGNANT</div>
+                <div class="ticket-subtitle">Gratte UNE SEULE case pour découvrir ton lot !</div>
+                
+                <div class="scratch-cards">
+                    <div class="scratch-card" id="card1" onclick="scratchCard(1)">
+                        <div class="card-number">1</div>
+                        <div class="prize-image">
+                            <img src="preview.webp" alt="iPhone 17">
+                        </div>
+                        <canvas class="scratch-canvas" width="160" height="200"></canvas>
+                    </div>
+
+                    <div class="scratch-card" id="card2" onclick="scratchCard(2)">
+                        <div class="card-number">2</div>
+                        <div class="prize-image">
+                            <img src="preview.webp" alt="iPhone 17">
+                        </div>
+                        <canvas class="scratch-canvas" width="160" height="200"></canvas>
+                    </div>
+
+                    <div class="scratch-card" id="card3" onclick="scratchCard(3)">
+                        <div class="card-number">3</div>
+                        <div class="prize-image">
+                            <img src="preview.webp" alt="iPhone 17">
+                        </div>
+                        <canvas class="scratch-canvas" width="160" height="200"></canvas>
+                    </div>
+                </div>
+
+                <div class="instruction">👆 Clique sur UNE case pour gratter !</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 3: Révélation -->
+    <div class="page" id="page3">
+        <div class="reveal-container">
+            <div class="emoji-big">💀</div>
+            <div class="reveal-text">J'Y CROIS PAS</div>
+            <div class="reveal-text">À QUEL POINT T'ES NAÏVE 😭</div>
+            <div style="font-size: 3rem; margin: 40px 0; color: #ff6b6b;">
+                🎯 TU T'ES FAIT PIÉGER 🎯
+            </div>
+            <div class="signature">PAR BIG MUHA 💀🔥</div>
+            
+            <button class="btn" onclick="resetGame()" style="margin-top: 50px;">
+                REJOUER (et te faire piéger encore) 😂
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let cardScratched = false;
+
+        function goToPage(pageNum) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page' + pageNum).classList.add('active');
+            
+            if (pageNum === 2) {
+                initScratchCards();
+            }
+        }
+
+        function initScratchCards() {
+            for (let i = 1; i <= 3; i++) {
+                const canvas = document.querySelector(`#card${i} .scratch-canvas`);
+                const ctx = canvas.getContext('2d');
+                
+                // Dessiner la couche à gratter
+                const gradient = ctx.createLinearGradient(0, 0, 160, 200);
+                gradient.addColorStop(0, '#c0c0c0');
+                gradient.addColorStop(0.5, '#e0e0e0');
+                gradient.addColorStop(1, '#c0c0c0');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, 160, 200);
+                
+                // Ajouter du texte
+                ctx.fillStyle = '#666';
+                ctx.font = 'bold 20px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('GRATTE', 80, 90);
+                ctx.fillText('ICI', 80, 120);
+                ctx.font = '30px Arial';
+                ctx.fillText('?', 80, 160);
+            }
+        }
+
+        function scratchCard(cardNum) {
+            if (cardScratched) return;
+            
+            cardScratched = true;
+            const card = document.getElementById(`card${cardNum}`);
+            const canvas = card.querySelector('.scratch-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Désactiver les autres cartes
+            for (let i = 1; i <= 3; i++) {
+                if (i !== cardNum) {
+                    document.getElementById(`card${i}`).classList.add('disabled');
+                }
+            }
+            
+            // Animation de grattage
+            let opacity = 1;
+            const fadeOut = setInterval(() => {
+                opacity -= 0.05;
+                ctx.globalAlpha = opacity;
+                
+                if (opacity <= 0) {
+                    clearInterval(fadeOut);
+                    canvas.style.display = 'none';
+                    card.classList.add('scratched');
+                    
+                    // Confettis
+                    createConfetti();
+                    
+                    // Attendre 2 secondes puis aller à la page 3
+                    setTimeout(() => {
+                        goToPage(3);
+                    }, 2000);
+                }
+            }, 30);
+        }
+
+        function createConfetti() {
+            for (let i = 0; i < 150; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = '-10px';
+                    confetti.style.background = ['#f093fb', '#f5576c', '#4facfe', '#ffd700'][Math.floor(Math.random() * 4)];
+                    confetti.style.animationDelay = Math.random() * 2 + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 20);
+            }
+        }
+
+        function resetGame() {
+            cardScratched = false;
+            goToPage(1);
+        }
+    </script>
+</body>
+</html>
